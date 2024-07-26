@@ -1,4 +1,5 @@
- const mongoose =require('mongoose');
+ const { type } = require('express/lib/response');
+const mongoose =require('mongoose');
  
 mongoose.connect("mongodb://127.0.0.1:27017/mindfreeplace")
 
@@ -9,6 +10,10 @@ const userModel = mongoose.Schema({
     age:Number,
     email:String,
     password:String,
+    date:{
+        type:Date,
+        default:Date.now
+    },
     posts:[
         {
             type: mongoose.Schema.Types.ObjectId,

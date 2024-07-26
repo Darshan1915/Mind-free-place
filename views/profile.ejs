@@ -12,45 +12,41 @@
             <div class="flex items-center space-x-4">
                 <img src="https://via.placeholder.com/100" alt="User Avatar" class="w-24 h-24 rounded-full border-4 border-blue-200">
                 <div>
-                    <h2 class="text-3xl font-bold text-blue-800">John Doe</h2>
-                    <p class="text-blue-600">@johndoe</p>
-                    <p class="text-blue-600">Joined January 2022</p>
+                    <h2 class="text-3xl font-bold text-blue-800"> <%= User.name  %></h2>
+                    <!-- <p class="text-blue-600">@<%= User.username %></p> -->
+                    <p class="text-blue-600">Joined <%= User.date %></p>
                 </div>
             </div>
             <div class="mt-6">
                 <h3 class="text-2xl font-bold text-blue-800">Create a New Post</h3>
-                <form action="/create-post" method="post" class="mt-4 space-y-4">
-                    <textarea name="post-content" rows="4" placeholder="What's on your mind?" class="w-full p-3 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                <form action="/post" method="post" class="mt-4 space-y-4">
+                    <textarea name="Content" rows="4" placeholder="What's on your mind?" class="w-full p-3 border border-blue-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
                     <button type="submit" class="w-full p-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Post</button>
                 </form>
-                <!-- kk -->
-            </div>
+             </div>
             <div class="mt-8">
                 <h3 class="text-2xl font-bold text-blue-800">Your Posts</h3>
                 <div class="mt-4 space-y-4">
-                    <!-- Sample Post -->
+
+                   <% User.posts.reverse().forEach(post => { %>
                     <div class="bg-blue-100 p-4 rounded-lg shadow-sm border-l-4 border-blue-500">
-                        <p class="text-blue-700">This is a sample post written by the user.</p>
+                        <p class="text-blue-600">@<%= User.username %></p>
+                        <p class="text-blue-700"><%= post.Content  %></p>
                         <div class="text-right">
-                            <span class="text-blue-500 text-sm">Posted on July 18, 2024</span>
+                            <span class="text-blue-500 text-sm"><%= post.date  %></span>
                         </div>
+                         <a href="/like/<%= post._id %>" id="likeButton" class="like-btn mt-5 px-4 py-2 bg-blue-500 text-white font-bold rounded-full focus:outline-none transition-transform transform hover:scale-105 active:scale-95">
+                            Like 
+                        </a>
+                        <small class="my-2 px-4 mb-4 text-blue-500 font-bold text-white"><%= post.likes.length  %> ❤️ </small>
                     </div>
-                    <!-- Additional posts can be added here -->
-                    <!-- Example Post 1 -->
-                    <div class="bg-blue-100 p-4 rounded-lg shadow-sm border-l-4 border-blue-500">
-                        <p class="text-blue-700">Just finished a great workout session!</p>
-                        <div class="text-right">
-                            <span class="text-blue-500 text-sm">Posted on July 17, 2024</span>
-                        </div>
-                    </div>
-                    <!-- Example Post 2 -->
-                    <div class="bg-blue-100 p-4 rounded-lg shadow-sm border-l-4 border-blue-500">
-                        <p class="text-blue-700">Loving the new JavaScript framework I'm using.</p>
-                        <div class="text-right">
-                            <span class="text-blue-500 text-sm">Posted on July 16, 2024</span>
-                        </div>
-                    </div>
+                   <% }) %> 
+                     
                 </div>
+            </div>
+            <div>
+                <button type="submit" class="  w-20 my-5 p-3 bg-blue-300 text-white font-bold rounded-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300">Logout</button>
+                  
             </div>
         </div>
     </div>
