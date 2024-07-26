@@ -15,6 +15,10 @@ app.get("/",(req,res)=>{
     res.render("index")
 })
 
+app.get("/register",(req,res)=>{
+    res.render("login")
+})
+
 app.post("/register", async(req,res)=>{
     let {name, username, password,email,age} = req.body;
 
@@ -70,5 +74,10 @@ app.post("/login", async(req,res)=>{
 app.get("/profile",(req,res)=>{
     res.render("profile")
 })
+
+// app.get("/logout",(req,res)=>{
+//     res.cookie("")
+//     res.redirect("/login")
+// })
             
 app.listen(3000);
