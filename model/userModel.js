@@ -10,6 +10,10 @@ const userModel = mongoose.Schema({
     age:Number,
     email:String,
     password:String,
+    profilepic:{
+        type: String,
+        default: "defaultProfile.jpg"
+    },
     date:{
         type:Date,
         default:Date.now

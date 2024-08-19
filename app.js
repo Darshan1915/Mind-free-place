@@ -6,14 +6,30 @@ const userModel = require('./model/userModel');
 const postModel = require('./model/userPosts.js')
 const cookieParser = require('cookie-parser');
 const userPosts = require('./model/userPosts.js');
+const upload = require('./config/multerConfig.js')
+const path = require('path');
+const { log } = require('console');
 
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname,"public")));
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
     res.render("index")
+})
+
+app.get("/profile/upload", (req, res) => {
+    res.render("profileUpload")
+})
+
+app.post("/upload", IsLoggedin,upload.single("image") ,async (req, res) => {
+    let user = await userModel.findOne({email:req.user.email});
+    //console.log(user);
+    user.profilepic = req.file.filename;
+    await user.save();
+    res.redirect("/profile")
 })
 
 app.get("/register", (req, res) => {
@@ -31,9 +47,9 @@ app.post("/register", async (req, res) => {
     }
     else {
         bcrypt.genSalt(10, (err, salt) => {
-            console.log(salt);
+            // console.log(salt);
             bcrypt.hash(password, salt, async (err, hash) => {
-                console.log(hash);
+                // console.log(hash);
                 const User = await userModel.create({
                     name,
                     username,
